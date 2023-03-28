@@ -63,48 +63,11 @@ def split_message(msg: str) -> List[str]:
     return result
 
 
-# def paginate_modules(paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
-#     if not chat:
-#         modules = sorted(
-#             [
-#                 EqInlineKeyboardButton(
-#                     x.__mod_name__,
-#                     callback_data="{}_module({})".format(
-#                         prefix, x.__mod_name__.lower()
-#                     ),
-#                 )
-#                 for x in module_dict.values()
-#             ]
-#         )
-#     else:
-#         modules = sorted(
-#             [
-#                 EqInlineKeyboardButton(
-#                     x.__mod_name__,
-#                     callback_data="{}_module({},{})".format(
-#                         prefix, chat, x.__mod_name__.lower()
-#                     ),
-#                 )
-#                 for x in module_dict.values()
-#             ]
-#         )
-
-#     pairs = [modules[i * 3 : (i + 1) * 3] for i in range((len(modules) + 3 - 1) // 3)]
-
-#     round_num = len(modules) / 3
-#     calc = len(modules) - round(round_num)
-#     if calc in [1, 2]:
-#         pairs.append((modules[-1],))
-#     elif calc == 2:
-#         pairs.append((modules[-1],))
-
-#     else:
-#         pairs += [[EqInlineKeyboardButton("Go Home", callback_data="home_")]]
-
-#     return pairs
 
 
-def paginate_modules(page_n, module_dict, prefix, chat=None):
+
+
+def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
     if not chat:
         modules = sorted(
             [
