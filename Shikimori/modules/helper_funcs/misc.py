@@ -89,9 +89,11 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
             )
         ]
 
-    return pairs
+    
+    else:
+        pairs += [[EqInlineKeyboardButton("Go Home", callback_data="home_")]]
 
-
+     return pairs
     
 def send_to_list(
     bot: Bot, send_to: list, message: str, markdown=False, html=False
