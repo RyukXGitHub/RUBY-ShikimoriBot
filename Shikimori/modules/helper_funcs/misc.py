@@ -130,7 +130,7 @@ def paginate_modules(page_n, module_dict, prefix, chat=None):
             ]
         )
 
-    pairs = list(zip(modules[i::3], modules[1::3], modules[2::3]))
+    pairs = list(zip(modules[::3], modules[1::3], modules[2::3]))
     i = 0
     for m in pairs:
         for _ in m:
@@ -145,7 +145,7 @@ def paginate_modules(page_n, module_dict, prefix, chat=None):
             )
         )
 
-    COLUMN_SIZE = 8
+    COLUMN_SIZE = 6
 
     max_num_pages = ceil(len(pairs) / COLUMN_SIZE)
     modulo_page = page_n % max_num_pages
