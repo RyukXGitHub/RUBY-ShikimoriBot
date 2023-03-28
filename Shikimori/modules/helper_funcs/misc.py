@@ -83,9 +83,9 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
             modulo_page * 6 : 6 * (modulo_page + 1)
         ] + [
             (
-                EqInlineKeyboardButton("❮", callback_data="{}_prev({})".format(prefix, modulo_page),),
+                EqInlineKeyboardButton("❮", callback_data="{}_prev({})".format(prefix, modulo_page)),
                 EqInlineKeyboardButton("Go Home", callback_data="home_"),
-                EqInlineKeyboardButton("❯", callback_data="{}_next({})".format(prefix, modulo_page),),
+                EqInlineKeyboardButton("❯", callback_data="{}_next({})".format(prefix, modulo_page)),
             )
         ]
 
@@ -93,7 +93,7 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
     else:
         pairs += [[EqInlineKeyboardButton("Go Home", callback_data="home_")]]
 
-     return pairs
+    return pairs
     
 def send_to_list(
     bot: Bot, send_to: list, message: str, markdown=False, html=False
