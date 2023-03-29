@@ -41,7 +41,7 @@ def split_message(msg: str) -> List[str]:
 
 
 
-def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
+def paginate_modules(page_n, module_dict, prefix, chat=None):
     if not chat:
         modules = sorted(
             [
@@ -67,33 +67,31 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
             ]
         )
 
-    pairs = [modules[i * 3 : (i + 1) * 3] for i in range((len(modules) + 3 - 1) // 3)]
-    round_num = len(modules) / 3
-    calc = len(modules) - round(round_num)
-    if calc in [1, 2]:
+    pairs = list(zip(modules[::3], modules[1::3], modules[2::3]))
+    if len(modules) % 3 == 1:
         pairs.append((modules[-1],))
-    
+    elif len(modules) % 3 == 2:
+        pairs.append((modules[-2], modules[-1]))
 
-    max_num_pages = ceil(len(pairs) / 6)
+    COLUMN_SIZE = 8
+
+    max_num_pages = ceil(len(pairs) / COLUMN_SIZE)
     modulo_page = page_n % max_num_pages
 
     # can only have a certain amount of buttons side by side
-    if len(pairs) > 3:
+    if len(pairs) > COLUMN_SIZE:
         pairs = pairs[
-            modulo_page * 6 : 6 * (modulo_page + 1)
+            modulo_page * COLUMN_SIZE : COLUMN_SIZE * (modulo_page + 1)
         ] + [
             (
-                EqInlineKeyboardButton("❮", callback_data="{}_prev({})".format(prefix, modulo_page)),
+                EqInlineKeyboardButton("❮", callback_data="{}_prev({})".format(prefix, modulo_page),),
                 EqInlineKeyboardButton("Go Home", callback_data="home_"),
-                EqInlineKeyboardButton("❯", callback_data="{}_next({})".format(prefix, modulo_page)),
+                EqInlineKeyboardButton("❯", callback_data="{}_next({})".format(prefix, modulo_page),),
             )
         ]
 
-    
-    else:
-        pairs += [[EqInlineKeyboardButton("Go Home", callback_data="home_")]]
-
     return pairs
+
     
 def send_to_list(
     bot: Bot, send_to: list, message: str, markdown=False, html=False
