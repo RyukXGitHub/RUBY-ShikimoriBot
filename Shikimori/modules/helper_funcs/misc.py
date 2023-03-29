@@ -39,7 +39,6 @@ def split_message(msg: str) -> List[str]:
 
 
 
-
 def paginate_modules(page_n, module_dict, prefix, chat=None):
     if not chat:
         modules = sorted(
@@ -66,25 +65,26 @@ def paginate_modules(page_n, module_dict, prefix, chat=None):
             ]
         )
 
-    pairs = [modules[i:i+3] for i in range(0, len(modules), 3)]
+    COLUMN_SIZE = 3
 
-    if len(pairs) == 0:
-        pairs = [[EqInlineKeyboardButton("No modules found", callback_data="empty")]]
-
-    max_num_pages = ceil(len(pairs) / 8)
+    pairs = [modules[i:i+COLUMN_SIZE] for i in range(0, len(modules), COLUMN_SIZE)]
+    
+    max_num_pages = ceil(len(pairs) / COLUMN_SIZE)
     modulo_page = page_n % max_num_pages
 
     # can only have a certain amount of buttons side by side
-    if len(pairs) > 8:
-        pairs = pairs[modulo_page * 8 : 8 * (modulo_page + 1)] + [
+    if len(pairs) > COLUMN_SIZE:
+        pairs = pairs[
+            modulo_page * COLUMN_SIZE : COLUMN_SIZE * (modulo_page + 1)
+        ] + [
             (
                 EqInlineKeyboardButton("❮", callback_data="{}_prev({})".format(prefix, modulo_page),),
                 EqInlineKeyboardButton("Go Home", callback_data="home_"),
                 EqInlineKeyboardButton("❯", callback_data="{}_next({})".format(prefix, modulo_page),),
             )
         ]
-
     return pairs
+
 
 
     
